@@ -49,7 +49,7 @@ export default class ObservableLoader extends Component<Props, State> {
           const event = new CustomEvent('change_select_options', {
             detail: {
               name: 'displayed_cells',
-              options: cellNames,
+              options: this.props.cellNames,
             },
           });
           if (this.props.displayedCells.includes(name) && this.displayRefs[name] !== null) {
@@ -60,11 +60,13 @@ export default class ObservableLoader extends Component<Props, State> {
       module_.redefine(this.props.dataInjectionCell, [], this.props.data);
       module_.redefine('width', [], this.props.width);
       module_.redefine('height', [], this.props.height);
+      console.log('----CELNAMES---');
+      console.log('cellnames', this.state.cellNames);
       this.setState({ cellNames });
       const event = new CustomEvent('change_select_options', {
         detail: {
           name: 'displayed_cells',
-          options: cellNames,
+          options: this.props.cellNames,
         },
       });
     });
