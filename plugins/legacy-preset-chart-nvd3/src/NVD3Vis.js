@@ -111,6 +111,7 @@ const BREAKPOINTS = {
 };
 
 const TIMESERIES_VIZ_TYPES = [
+  'prophet',
   'line',
   'dual_line',
   'line_multi',
@@ -131,7 +132,7 @@ const propTypes = {
           key: PropTypes.string,
           values: PropTypes.arrayOf(categoryAndValueXYType),
         }),
-        // area, line, compare, bar
+        // area, line, compare, bar, prophet
         PropTypes.shape({
           key: PropTypes.arrayOf(PropTypes.string),
           values: PropTypes.arrayOf(numericXYType),
@@ -186,6 +187,7 @@ const propTypes = {
     'time_pivot',
     'pie',
     'dual_line',
+    'prophet',
   ]),
   xAxisFormat: PropTypes.string,
   numberFormat: PropTypes.string,
@@ -339,7 +341,9 @@ function nvd3Vis(element, props) {
     const numberFormatter = getNumberFormatter(numberFormat);
 
     switch (vizType) {
+      case 'prophet':
       case 'line':
+        console.log('!', vizType);
         if (canShowBrush) {
           chart = nv.models.lineWithFocusChart();
           if (staggerLabels) {
