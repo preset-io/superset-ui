@@ -59,6 +59,7 @@ export default {
               // valueRenderer: c => <ColumnOption column={c} />,
               valueKey: 'name',
               allowAll: true,
+              // allowAll: true,
               // mapStateToProps: (state: State) => {
               //   console.warn('state!!!!!!!!!!!', state);
               //   return {
@@ -67,6 +68,7 @@ export default {
               // },
               options: [{ name: 'observable' }, { name: 'rawData' }], // commaChoosesOption: false,
               freeForm: true,
+              // freeForm: true,
               renderTrigger: true,
             },
           },

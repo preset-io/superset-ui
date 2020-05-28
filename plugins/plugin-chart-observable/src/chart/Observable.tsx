@@ -18,7 +18,6 @@ export interface ObservableProps extends ObservableVisualProps {
   height: number;
   width: number;
 }
-
 class Observable extends React.PureComponent<ObservableProps & SupersetThemeProps> {
   render() {
     const {
@@ -29,6 +28,7 @@ class Observable extends React.PureComponent<ObservableProps & SupersetThemeProp
       displayedCells,
       dataInjectionCell,
       showDebug,
+      hooks,
     } = this.props;
 
     return (
@@ -40,6 +40,7 @@ class Observable extends React.PureComponent<ObservableProps & SupersetThemeProp
           dataInjectionCell={dataInjectionCell}
           width={width}
           height={height}
+          hooks={hooks}
         >
           {showDebug && (
             <div>

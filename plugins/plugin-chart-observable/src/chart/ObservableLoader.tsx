@@ -35,12 +35,23 @@ export default class ObservableLoader extends Component<Props, State> {
       const runtime = new Runtime();
       let cellNames: string[] = [];
       let module_ = null;
+      /*
+       */
       if (!this.props.displayedCells.length) {
+        console.log('!this.props.displayedCells');
         module_ = runtime.module(this.notebook, Inspector.into(this.notebookWrapperRef.current));
+        document.dispatchEvent(event);
       } else {
+        document.dispatchEvent(event);
+        console.log('ELSE there is length');
         module_ = runtime.module(this.notebook, (name: string) => {
           if (name) cellNames.push(name);
-
+          const event = new CustomEvent('change_select_options', {
+            detail: {
+              name: 'displayed_cells',
+              options: cellNames,
+            },
+          });
           if (this.props.displayedCells.includes(name) && this.displayRefs[name] !== null) {
             return new Inspector(this.displayRefs[name]);
           }
@@ -50,6 +61,12 @@ export default class ObservableLoader extends Component<Props, State> {
       module_.redefine('width', [], this.props.width);
       module_.redefine('height', [], this.props.height);
       this.setState({ cellNames });
+      const event = new CustomEvent('change_select_options', {
+        detail: {
+          name: 'displayed_cells',
+          options: cellNames,
+        },
+      });
     });
   }
 
