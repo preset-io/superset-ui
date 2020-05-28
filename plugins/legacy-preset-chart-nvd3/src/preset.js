@@ -28,6 +28,7 @@ import DualLineChartPlugin from './DualLine';
 import LineChartPlugin from './Line';
 import LineMultiChartPlugin from './LineMulti';
 import PieChartPlugin from './Pie';
+import ProphetChartPlugin from './Prophet';
 import TimePivotChartPlugin from './TimePivot';
 
 export default class NVD3ChartPreset extends Preset {
@@ -46,6 +47,7 @@ export default class NVD3ChartPreset extends Preset {
         new LineChartPlugin().configure({ key: 'line' }),
         new LineMultiChartPlugin().configure({ key: 'line_multi' }),
         new PieChartPlugin().configure({ key: 'pie' }),
+        new ProphetChartPlugin().configure({ key: 'prophet' }),
         new TimePivotChartPlugin().configure({ key: 'time_pivot' }),
       ],
     });

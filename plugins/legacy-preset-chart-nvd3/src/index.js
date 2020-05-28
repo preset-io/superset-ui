@@ -10,4 +10,5 @@ export { default as DualLineChartPlugin } from './DualLine';
 export { default as LineChartPlugin } from './Line';
 export { default as LineMultiChartPlugin } from './LineMulti';
 export { default as PieChartPlugin } from './Pie';
+export { default as ProphetChartPlugin } from './Prophet';
 export { default as TimePivotChartPlugin } from './TimePivot';
