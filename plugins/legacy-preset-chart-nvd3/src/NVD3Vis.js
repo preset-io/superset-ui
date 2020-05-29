@@ -341,10 +341,8 @@ function nvd3Vis(element, props) {
     const numberFormatter = getNumberFormatter(numberFormat);
 
     switch (vizType) {
-      case 'prophet':
-        chart = nv.models.lineChart();
-        break;
       case 'line':
+      case 'prophet':
         if (canShowBrush) {
           chart = nv.models.lineWithFocusChart();
           if (staggerLabels) {
@@ -884,9 +882,9 @@ function nvd3Vis(element, props) {
       }
 
       if (vizType === 'prophet') {
-        data[0].color = '#444444';
-        data[1].color = '#0071b2';
-        data[2].color = '#cce2ef';
+        data[1].color = '#444444';
+        data[2].color = '#0071b2';
+        data[0].color = '#cce2ef';
         data[3].color = '#cce2ef';
       }
       // render chart
@@ -900,7 +898,7 @@ function nvd3Vis(element, props) {
         .call(chart);
 
       if (vizType === 'prophet') {
-        setFill('yhat_lower', 3, 0.2);
+        setFill('Lower', 3, 0.4);
         console.log(data);
       }
 
