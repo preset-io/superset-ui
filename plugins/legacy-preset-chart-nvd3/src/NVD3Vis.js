@@ -342,8 +342,9 @@ function nvd3Vis(element, props) {
 
     switch (vizType) {
       case 'prophet':
+        chart = nv.models.lineChart();
+        break;
       case 'line':
-        console.log('!', vizType);
         if (canShowBrush) {
           chart = nv.models.lineWithFocusChart();
           if (staggerLabels) {
@@ -854,6 +855,40 @@ function nvd3Vis(element, props) {
         }
       }
 
+      function setFill(key_name, series_index, opacity) {
+        var area = d3.svg
+          .area()
+          .x(function (d, i) {
+            return chart.xScale()(d.x);
+          })
+          .y0(function (d, i) {
+            return chart.yScale()(data[series_index]['values'][i]['y']);
+          })
+          .y1(function (d, i) {
+            return chart.yScale()(d.y);
+          });
+        d3.selectAll('#filled').remove();
+        setTimeout(function () {
+          d3.selectAll('.nv-group').each(function (d, i) {
+            if (d.key === key_name) {
+              var t = d3.select(this),
+                d = t.datum().values;
+              t.append('path')
+                .attr('id', 'filled')
+                .attr('d', area(d, i))
+                .style('fill', '#cce2ef')
+                .style('opacity', opacity);
+            }
+          });
+        }, 90);
+      }
+
+      if (vizType === 'prophet') {
+        data[0].color = '#444444';
+        data[1].color = '#0071b2';
+        data[2].color = '#cce2ef';
+        data[3].color = '#cce2ef';
+      }
       // render chart
       chart.margin(margins);
       svg
@@ -863,6 +898,11 @@ function nvd3Vis(element, props) {
         .attr('width', width)
         .attr('height', height)
         .call(chart);
+
+      if (vizType === 'prophet') {
+        setFill('yhat_lower', 3, 0.2);
+        console.log(data);
+      }
 
       // On scroll, hide (not remove) tooltips so they can reappear on hover.
       // Throttle to only 4x/second.
