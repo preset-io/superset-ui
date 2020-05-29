@@ -59,27 +59,6 @@ export default {
         ],
         ['metric'],
         ['adhoc_filters'],
-        ['limit', 'timeseries_limit_metric'],
-        [
-          {
-            name: 'order_desc',
-            config: {
-              type: 'CheckboxControl',
-              label: t('Sort Descending'),
-              default: true,
-              description: t('Whether to sort descending or ascending'),
-            },
-          },
-          {
-            name: 'contribution',
-            config: {
-              type: 'CheckboxControl',
-              label: t('Contribution'),
-              default: false,
-              description: t('Compute the contribution to the total'),
-            },
-          },
-        ],
         ['row_limit', null],
       ],
     },
