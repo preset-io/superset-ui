@@ -18,6 +18,7 @@
  */
 import { t } from '@superset-ui/translation';
 import { sections } from '@superset-ui/control-utils';
+import { legacyValidateInteger, legacyValidateNumber } from '@superset-ui/validator';
 import {
   lineInterpolation,
   showBrush,
@@ -46,20 +47,12 @@ export default {
       controlSetRows: [
         [
           {
-            name: 'training',
-            config: {
-              type: 'TextControl',
-              label: t('Training Period'),
-              default: '',
-              description: t('FOr what time period should the model be trained'),
-            },
-          },
-          {
             name: 'periods',
             config: {
               type: 'TextControl',
               label: t('Forecast periods'),
-              default: '',
+              validators: [legacyValidateInteger],
+              default: 10,
               description: t('How many periods into the future do we want to predict'),
             },
           },
@@ -88,6 +81,81 @@ export default {
           },
         ],
         ['row_limit', null],
+      ],
+    },
+    {
+      label: t('Model parameters'),
+      expanded: true,
+      controlSetRows: [
+        [
+          {
+            name: 'interval',
+            config: {
+              type: 'TextControl',
+              label: t('Confidence interval'),
+              validators: [legacyValidateNumber],
+              default: 0.8,
+              description: t('Width of the confidence interval. Should be between 0 and 1'),
+            },
+          },
+          null,
+        ],
+        [
+          {
+            name: 'seasonality_yearly',
+            config: {
+              type: 'SelectControl',
+              freeForm: true,
+              label: 'Yearly seasonality',
+              choices: [
+                [null, 'default'],
+                [true, 'Yes'],
+                [false, 'No'],
+              ],
+              default: null,
+              description: t(
+                'Should yearly seasonality be applied. An integer value will specify Fourier order of seasonality.',
+              ),
+            },
+          },
+          {
+            name: 'seasonality_weekly',
+            config: {
+              type: 'SelectControl',
+              freeForm: true,
+              label: 'Weekly seasonality',
+              choices: [
+                [null, 'default'],
+                [true, 'Yes'],
+                [false, 'No'],
+              ],
+              default: null,
+              description: t(
+                'Should weekly seasonality be applied. An integer value will specify Fourier order of seasonality.',
+              ),
+            },
+          },
+        ],
+        [
+          {
+            name: 'seasonality_daily',
+            config: {
+              type: 'SelectControl',
+              freeForm: true,
+              label: 'Daily seasonality',
+              choices: [
+                [null, 'default'],
+                [true, 'Yes'],
+                [false, 'No'],
+              ],
+              default: null,
+              description: t(
+                'Should daily seasonality be applied. An integer value will specify Fourier order of seasonality.',
+              ),
+            },
+          },
+          null,
+        ],
       ],
     },
     {
