@@ -35,7 +35,6 @@ import {
   richTooltip,
   leftMargin,
   showMarkers,
-  timeSeriesSection,
 } from '../NVD3Controls';
 
 export default {
@@ -178,8 +177,6 @@ export default {
         ['y_axis_format', yAxisBounds],
       ],
     },
-    timeSeriesSection[1],
-    sections.annotations,
   ],
   controlOverrides: {
     row_limit: {
