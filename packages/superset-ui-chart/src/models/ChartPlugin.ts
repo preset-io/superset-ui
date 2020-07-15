@@ -2,12 +2,13 @@ import { ComponentType } from 'react';
 import { isRequired, Plugin } from '@superset-ui/core';
 import { QueryFormData } from '@superset-ui/query';
 import ChartMetadata from './ChartMetadata';
+import ChartProps from './ChartProps';
 import getChartMetadataRegistry from '../registries/ChartMetadataRegistrySingleton';
 import getChartBuildQueryRegistry from '../registries/ChartBuildQueryRegistrySingleton';
 import getChartComponentRegistry from '../registries/ChartComponentRegistrySingleton';
 import getChartControlPanelRegistry from '../registries/ChartControlPanelRegistrySingleton';
 import getChartTransformPropsRegistry from '../registries/ChartTransformPropsRegistrySingleton';
-import { BuildQueryFunction, TransformProps } from '../types/TransformFunction';
+import { BuildQueryFunction, TransformFunction } from '../types/TransformFunction';
 import { ChartControlPanel } from './ChartControlPanel';
 
 function IDENTITY<T>(x: T) {
@@ -21,16 +22,16 @@ export type PromiseOrValueLoader<T> = () => PromiseOrValue<T>;
 export type ChartType = ComponentType<any>;
 type ValueOrModuleWithValue<T> = T | { default: T };
 
-interface ChartPluginConfig<T extends QueryFormData> {
+interface ChartPluginConfig<T extends QueryFormData, P extends ChartProps = ChartProps> {
   metadata: ChartMetadata;
   /** Use buildQuery for immediate value. For lazy-loading, use loadBuildQuery. */
   buildQuery?: BuildQueryFunction<T>;
   /** Use loadBuildQuery for dynamic import (lazy-loading) */
   loadBuildQuery?: PromiseOrValueLoader<ValueOrModuleWithValue<BuildQueryFunction<T>>>;
   /** Use transformProps for immediate value. For lazy-loading, use loadTransformProps.  */
-  transformProps?: TransformProps;
+  transformProps?: TransformFunction<P>;
   /** Use loadTransformProps for dynamic import (lazy-loading) */
-  loadTransformProps?: PromiseOrValueLoader<ValueOrModuleWithValue<TransformProps>>;
+  loadTransformProps?: PromiseOrValueLoader<ValueOrModuleWithValue<TransformFunction<P>>>;
   /** Use Chart for immediate value. For lazy-loading, use loadChart. */
   Chart?: ChartType;
   /** Use loadChart for dynamic import (lazy-loading) */
@@ -55,14 +56,17 @@ function sanitizeLoader<T>(
   };
 }
 
-export default class ChartPlugin<T extends QueryFormData = QueryFormData> extends Plugin {
+export default class ChartPlugin<
+  T extends QueryFormData = QueryFormData,
+  P extends ChartProps = ChartProps
+> extends Plugin {
   controlPanel: ChartControlPanel;
 
   metadata: ChartMetadata;
 
   loadBuildQuery?: PromiseOrValueLoader<BuildQueryFunction<T>>;
 
-  loadTransformProps: PromiseOrValueLoader<TransformProps>;
+  loadTransformProps: PromiseOrValueLoader<TransformFunction<P>>;
 
   loadChart: PromiseOrValueLoader<ChartType>;
 

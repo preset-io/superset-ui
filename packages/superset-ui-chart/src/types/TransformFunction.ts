@@ -6,7 +6,7 @@ export interface PlainProps {
   [key: string]: any;
 }
 
-type TransformFunction<Input = PlainProps, Output = PlainProps> = (x: Input) => Output;
+export type TransformFunction<Input = PlainProps, Output = PlainProps> = (x: Input) => Output;
 
 export type PreTransformProps = TransformFunction<ChartProps, ChartProps>;
 export type TransformProps = TransformFunction<ChartProps>;
