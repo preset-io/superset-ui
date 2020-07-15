@@ -55,10 +55,17 @@ export default function transformProps(chartProps: ChartProps) {
 
   console.log('formData via TransformProps.ts', formData);
 
+  const transformedData = data.map(datum => {
+    return {
+      value: datum.count,
+      name: datum.gender,
+    };
+  });
+
   return {
     width,
     height,
-    data,
+    data: transformedData,
     // and now your control data, manipulated as needed, and passed through as props!
     boldText: formData.boldText,
     headerFontSize: formData.headerFontSize,

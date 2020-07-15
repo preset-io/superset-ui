@@ -18,6 +18,7 @@
  */
 import React, { useEffect, createRef } from 'react';
 import styled, { supersetTheme } from '@superset-ui/style';
+import echarts from 'echarts';
 
 interface EchartsPieStylesProps {
   height: number;
@@ -78,10 +79,43 @@ export default function EchartsPie(props: EchartsPieProps) {
   // Here, you can do that with createRef, and the useEffect hook.
   useEffect(() => {
     const root = rootElem.current as HTMLElement;
-    console.log('Plugin element', root);
+    // console.log('Plugin element', root);
+    const myChart = echarts.init(root);
+    myChart.setOption({
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b}: {c} ({d}%)',
+      },
+      legend: {
+        orient: 'vertical',
+        left: 10,
+        data: ['boy', 'girl'],
+      },
+      series: [
+        {
+          name: 'gender',
+          type: 'pie',
+          radius: ['50%', '70%'],
+          avoidLabelOverlap: false,
+          label: {
+            show: false,
+            position: 'center',
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '30',
+              fontWeight: 'bold',
+            },
+          },
+          labelLine: {
+            show: false,
+          },
+          data: props.data,
+        },
+      ],
+    });
   });
-
-  console.log('Plugin props', props);
 
   return (
     <Styles
