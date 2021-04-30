@@ -17,10 +17,10 @@
  * under the License.
  */
 import emotionStyled, { CreateStyled } from '@emotion/styled';
-import { useTheme as useThemeBasic } from 'emotion-theming';
+import { useTheme as useThemeBasic } from '@emotion/react';
 import createCache from '@emotion/cache';
 
-export { ThemeProvider, withTheme } from 'emotion-theming';
+export { ThemeProvider, withTheme } from '@emotion/react';
 export { ClassNames, Global, InterpolationWithTheme, SerializedStyles } from '@emotion/core';
 export { CacheProvider, jsx, css } from '@emotion/react';
 export { createCache };
